@@ -4,34 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TestMaker.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="400">
+             mc:Ignorable="d" Height="320" Width="300">
     <UserControl.Resources>
         <Style TargetType="TextBox">
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Width" Value="350"/>
-            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="250"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
     </UserControl.Resources>
-    <Grid>
-        <StackPanel>
+    <Grid >
+        <StackPanel >
             <TextBox x:Name="tb_Question" 
-                     Text="{Binding Path=Question, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
-            <RadioButton x:Name="rb_1Anser" GroupName="answers">
+                     Text="{Binding Question, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                     Margin="19,0,31,0" 
+                     Width="Auto"/>
+            <RadioButton x:Name="rb_1Answer" GroupName="answers" Checked="WhichAnswerChecked" Tag="1">
                 <TextBox x:Name="tb_1Answer"
-                         Text="{Binding Path=Answers[0], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                         Text="{Binding Answers[0], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </RadioButton>
-            <RadioButton x:Name="rb_2Anser" GroupName="answers">
+            <RadioButton x:Name="rb_2Answer" GroupName="answers" Checked="WhichAnswerChecked" Tag="2">
                 <TextBox x:Name="tb_2Answer"
-                         Text="{Binding Path=Answers[1], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                         Text="{Binding Answers[1], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </RadioButton>
-            <RadioButton x:Name="rb_3Anser" GroupName="answers">
+            <RadioButton x:Name="rb_3Answer" GroupName="answers" Checked="WhichAnswerChecked" Tag="3">
                 <TextBox x:Name="tb_3Answer"
-                         Text="{Binding Path=Answer[2], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                         Text="{Binding Answers[2], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </RadioButton>
-            <RadioButton x:Name="rb_4Anser" GroupName="answers">
+            <RadioButton x:Name="rb_4Answer" GroupName="answers" Checked="WhichAnswerChecked" Tag="4">
                 <TextBox x:Name="tb_4Answer"
-                         Text="{Binding Path=Answer[3], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
+                         Text="{Binding Answers[3], RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"/>
             </RadioButton>
         </StackPanel>
     </Grid>

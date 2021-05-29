@@ -4,19 +4,43 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:qv="clr-namespace:TestMaker.View"
+        xmlns:vm="clr-namespace:TestMaker.ViewModel"
         xmlns:local="clr-namespace:TestMaker"
         mc:Ignorable="d"
-        Title="TestMaker" Height="750" Width="1000">
-    <Grid>
+        Title="TestMaker" Height="700" Width="800">
+    <Window.DataContext>
+        <vm:TestMakerViewModel x:Name="viewModel"/>
+    </Window.DataContext>
+    <Grid >
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="4*"/>
-        </Grid.RowDefinitions>
-        <qv:QuestionControl Grid.Column="1" Grid.Row="1" Margin="0,0,350,60"
-                            Question=""/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2.5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <qv:QuestionControl Grid.Row="0" Margin="10,158,20,0" 
+                                Answers="{Binding CurrentAnswers, Mode=TwoWay}"
+                                Question="{Binding CurrentQuestion, Mode=TwoWay}"
+                                CorrectAnswer="{Binding CorrectAnswer, Mode=TwoWay}"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <Button x:Name="bt_previousQuestion" 
+                        Height="40" 
+                        Width="100" 
+                        Margin="35,0,0,140"
+                        Content="Prevoius"
+                        Command="{Binding PreviousQuestoin}"/>
+                <Button x:Name="bt_nextQuestion" 
+                        Height="40" 
+                        Width="100" 
+                        Margin="40,0,0,140"
+                        Content="Next"
+                        Command="{Binding NextQuestion}"/>
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </Window>

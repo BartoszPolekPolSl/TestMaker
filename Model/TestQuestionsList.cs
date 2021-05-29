@@ -13,13 +13,28 @@ namespace TestMaker.Model
         {
             listOfQuestions = new List<TestQuestion>();
         }
+
         public TestQuestionsList(List<TestQuestion> listOfQuestions)
         {
             this.listOfQuestions = listOfQuestions;
         }
+
+        public TestQuestion this[int index]
+        {
+            get { return listOfQuestions[index]; }
+        }
+
         public void AddQuestion(TestQuestion q)
         {
             listOfQuestions.Add(q);
+        }
+        
+        public int LengthOfQuestionList
+        {
+            get
+            {
+                return listOfQuestions.Count;
+            }
         }
     }
 }

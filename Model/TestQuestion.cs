@@ -10,8 +10,11 @@ namespace TestMaker.Model
     {
         public string Question { get; set; }
         public string[] Answers { get; set; }
-        public int CorrectAnswer { get; set; }
-
+        public int? CorrectAnswer { get; set; }
+        public TestQuestion()
+        {
+            Answers = new string[4];
+        }
         public TestQuestion(string question, string[] answers, int correctAnswer)
         {
             Question = question;

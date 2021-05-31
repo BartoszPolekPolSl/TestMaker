@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestMaker.Model
 {
-    class TestQuestionsList
+    public class TestQuestionsList
     {
         private List<TestQuestion> listOfQuestions;
         public TestQuestionsList()

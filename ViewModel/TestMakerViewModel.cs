@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestMaker.ViewModel
 {
+    using Microsoft.Win32;
     using Model;
     using System.Windows.Input;
 
@@ -13,14 +14,17 @@ namespace TestMaker.ViewModel
     {
         public TestMakerViewModel()
         {
-            questionList = new TestQuestionsList();
+            test = new Test();
             currentQuestion = new TestQuestion();
             indexOfCurrentQuestion = 0;
         }
-        private TestQuestionsList questionList;
+        #region Private fields
+        private Test test;
         private TestQuestion currentQuestion;
         private int indexOfCurrentQuestion;
-        #region Properties
+        #endregion Private fields
+
+        #region Binded properties 
         public string CurrentQuestion
         {
             get
@@ -57,7 +61,19 @@ namespace TestMaker.ViewModel
                 OnPropertyChange(nameof(CorrectAnswer));
             }
         }
-        #endregion Properties
+        public string NameOfTest
+        {
+            get
+            {
+                return test.NameOfTest;
+            }
+            set
+            {
+                test.NameOfTest = value;
+                OnPropertyChange(nameof(NameOfTest));
+            }
+        }
+        #endregion Binded properties
 
         #region Commands
         private ICommand nextQuestion;
@@ -70,16 +86,7 @@ namespace TestMaker.ViewModel
                     nextQuestion = new RelayCommand(
                         arg=> 
                         {
-                            indexOfCurrentQuestion++;
-                            if (indexOfCurrentQuestion == questionList.LengthOfQuestionList+1)
-                            {                            
-                                questionList.AddQuestion(currentQuestion);
-                                currentQuestion = new TestQuestion();                               
-                            }
-                            else
-                            {
-                                currentQuestion = questionList[indexOfCurrentQuestion-1];
-                            }
+                            getNextQuestion();
                             OnPropertyChange(nameof(CurrentAnswers), nameof(CurrentQuestion), nameof(CorrectAnswer));
                         },
                         arg=>true); 
@@ -97,19 +104,93 @@ namespace TestMaker.ViewModel
                     previousQuestoin = new RelayCommand(
                         arg =>
                         {
-                            indexOfCurrentQuestion--;
-                            currentQuestion = questionList[indexOfCurrentQuestion];                           
+                            getPreviousQuestion();
                             OnPropertyChange(nameof(CurrentAnswers), nameof(CurrentQuestion), nameof(CorrectAnswer));
                         },
-                        arg=>indexOfCurrentQuestion>=0);
+                        arg=>indexOfCurrentQuestion>0);
                 }
                 return previousQuestoin;
             }       
         }
+        private ICommand saveTest;
+        public ICommand SaveTest
+        {
+            get
+            {
+                if (saveTest == null)
+                {
+                    saveTest = new RelayCommand(
+                        arg =>
+                        {
+                            SaveFileDialog dialog = new SaveFileDialog();
+                            dialog.Filter = "Text File(*.txt)|*.txt";
+                            dialog.DefaultExt = ".txt";
+                            if (dialog.ShowDialog() == true)
+                            {
+                                test.questionList.AddQuestion(currentQuestion);
+                                test.SaveTest(dialog.FileName);
+                            }
+                        },
+                        arg=>true);
+                }
+                return saveTest;
+            }
+        }
+        private ICommand loadTest;
+        public ICommand LoadTest
+        {
+            get
+            {
+                if (loadTest == null)
+                {
+                    loadTest = new RelayCommand(
+                        arg =>
+                        {
+                            OpenFileDialog dialog = new OpenFileDialog();
+                            dialog.Filter = "Text File(*.txt)|*.txt";
+                            dialog.DefaultExt = ".txt";
+                            if (dialog.ShowDialog() == true)
+                            {
+                                test = new Test();
+                                test.LoadTest(dialog.FileName);
+                            }
+                            indexOfCurrentQuestion = 0;
+                            currentQuestion = test.questionList[0];
+                            OnPropertyChange(nameof(CurrentAnswers), nameof(CurrentQuestion), nameof(CorrectAnswer), nameof(NameOfTest));
+                        },
+                        arg=>true
+                        );
+                }
+                return loadTest;
+            }
+        }
         #endregion Commands
-        //private bool IfAllFieldsFilled()
-        // {
-        //     if(currentQuestion.Answers.&&currentQuestion.CorrectAnswer)
-        // }
+
+      private void getNextQuestion()
+        {
+            indexOfCurrentQuestion++;
+            try
+            {
+                currentQuestion = test.questionList[indexOfCurrentQuestion];
+
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                if (indexOfCurrentQuestion == test.questionList.LengthOfQuestionList)
+                {
+                    currentQuestion = new TestQuestion();
+                }
+                else
+                {
+                    test.questionList.AddQuestion(currentQuestion);
+                    currentQuestion = new TestQuestion();
+                }
+            }
+        }
+      private void getPreviousQuestion()
+        {
+            indexOfCurrentQuestion--;
+            currentQuestion = test.questionList[indexOfCurrentQuestion];
+        }
     }
 }

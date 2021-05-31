@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\Test.cs" />
     <Compile Include="Model\TestQuestion.cs" />
     <Compile Include="Model\TestQuestionsList.cs" />
     <Compile Include="ViewModel\BaseClass\RelayCommand.cs" />

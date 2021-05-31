@@ -7,7 +7,9 @@
         xmlns:vm="clr-namespace:TestMaker.ViewModel"
         xmlns:local="clr-namespace:TestMaker"
         mc:Ignorable="d"
-        Title="TestMaker" Height="700" Width="800">
+        Title="TestMaker" Height="700" Width="800"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize">
     <Window.DataContext>
         <vm:TestMakerViewModel x:Name="viewModel"/>
     </Window.DataContext>
@@ -22,6 +24,8 @@
                 <RowDefinition Height="2.5*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
+            <TextBox Grid.Row="0" Margin="25,40,49.4,392.2" FontSize="25"
+                     Text="{Binding NameOfTest, Mode=TwoWay}"/>
             <qv:QuestionControl Grid.Row="0" Margin="10,158,20,0" 
                                 Answers="{Binding CurrentAnswers, Mode=TwoWay}"
                                 Question="{Binding CurrentQuestion, Mode=TwoWay}"
@@ -41,6 +45,11 @@
                         Command="{Binding NextQuestion}"/>
             </StackPanel>
         </Grid>
-        
+        <Button Grid.Column="2" Margin="50,530,50,80"
+                Content="Save"
+                Command="{Binding SaveTest}"/>
+        <Button Margin="74,530,47.4,80.4"
+            Content="Load"
+            Command="{Binding LoadTest}"/>
     </Grid>
 </Window>

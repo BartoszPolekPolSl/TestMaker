@@ -66,16 +66,16 @@ namespace TestMaker.View
                 (d as QuestionControl).rb_3Answer.IsChecked = false;
                 (d as QuestionControl).rb_4Answer.IsChecked = false;
             }
-            if (newValue == 1)
+            if (newValue == 0)
                 (d as QuestionControl).rb_1Answer.IsChecked = true;
 
-            if (newValue == 2)
+            if (newValue == 1)
                 (d as QuestionControl).rb_2Answer.IsChecked = true;
 
-            if (newValue == 3)
+            if (newValue == 2)
                 (d as QuestionControl).rb_3Answer.IsChecked = true;
 
-            if (newValue == 4)
+            if (newValue == 3)
                 (d as QuestionControl).rb_4Answer.IsChecked = true;
         }
         private void WhichAnswerChecked(object sender, RoutedEventArgs e)

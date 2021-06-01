@@ -89,7 +89,7 @@ namespace TestMaker.ViewModel
                             getNextQuestion();
                             OnPropertyChange(nameof(CurrentAnswers), nameof(CurrentQuestion), nameof(CorrectAnswer));
                         },
-                        arg=>true); 
+                        arg=>!string.IsNullOrWhiteSpace(CurrentAnswers[0])&& !string.IsNullOrWhiteSpace(CurrentAnswers[1])&& !string.IsNullOrWhiteSpace(CurrentAnswers[2])&& !string.IsNullOrWhiteSpace(CurrentAnswers[3])&& !string.IsNullOrWhiteSpace(CurrentQuestion)&&CorrectAnswer!=null); 
                 }
                 return nextQuestion;
             }
@@ -131,7 +131,7 @@ namespace TestMaker.ViewModel
                                 test.SaveTest(dialog.FileName);
                             }
                         },
-                        arg=>true);
+                        arg=>!string.IsNullOrWhiteSpace(NameOfTest));
                 }
                 return saveTest;
             }

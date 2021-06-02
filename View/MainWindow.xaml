@@ -27,9 +27,9 @@
             <TextBox Grid.Row="0" Margin="25,40,49.4,392.2" FontSize="25"
                      Text="{Binding NameOfTest, Mode=TwoWay}"/>
             <qv:QuestionControl Grid.Row="0" Margin="10,158,20,0" 
-                                Answers="{Binding CurrentAnswers, Mode=TwoWay}"
-                                Question="{Binding CurrentQuestion, Mode=TwoWay}"
-                                CorrectAnswer="{Binding CorrectAnswer, Mode=TwoWay}"/>
+                                Answers="{Binding CurrentAnswers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Question="{Binding CurrentQuestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                CorrectAnswer="{Binding CorrectAnswer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Button x:Name="bt_previousQuestion" 
                         Height="40" 
@@ -51,5 +51,8 @@
         <Button Margin="74,530,47.4,80.4"
             Content="Load"
             Command="{Binding LoadTest}"/>
+        <Button Margin="74,442,47,168"
+            Content="Instruction"
+            Command="{Binding Instruction}"/>
     </Grid>
 </Window>

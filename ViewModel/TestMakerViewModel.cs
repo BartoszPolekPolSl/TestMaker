@@ -8,6 +8,7 @@ namespace TestMaker.ViewModel
 {
     using Microsoft.Win32;
     using Model;
+    using System.Windows;
     using System.Windows.Input;
 
     class TestMakerViewModel : ViewModel
@@ -127,8 +128,15 @@ namespace TestMaker.ViewModel
                             dialog.DefaultExt = ".txt";
                             if (dialog.ShowDialog() == true)
                             {
-                                test.questionList.AddQuestion(currentQuestion);
-                                test.SaveTest(dialog.FileName);
+                                if (indexOfCurrentQuestion == test.questionList.LengthOfQuestionList)
+                                {
+                                    test.questionList.AddQuestion(currentQuestion);
+                                    test.SaveTest(dialog.FileName);
+                                }
+                                else
+                                {
+                                    test.SaveTest(dialog.FileName);
+                                }                           
                             }
                         },
                         arg=>!string.IsNullOrWhiteSpace(NameOfTest));
@@ -162,6 +170,24 @@ namespace TestMaker.ViewModel
                         );
                 }
                 return loadTest;
+            }
+        }
+        private ICommand instruction;
+        public ICommand Instruction
+        {
+            get
+            {
+                if (instruction == null)
+                {
+                    instruction = new RelayCommand(
+                        arg =>
+                        {
+                            MessageBox.Show("The program is used to create tests. In the first field enter the name of the test, and in the next fields enter the question and 4 answers. Mark the right answer. To confirm a question and move to the next one click \"Next\" button. After creating the test, save it by clicking \"Save\" and selecting a file name and location. You can also edit existing tests by loading them with \"Load\" button.", "Instruction", MessageBoxButton.OK, MessageBoxImage.Information);
+                        },
+                        arg => true
+                        );
+                }
+                return instruction;
             }
         }
         #endregion Commands
